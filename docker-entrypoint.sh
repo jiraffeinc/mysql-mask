@@ -10,7 +10,7 @@ export MASK_DB=${SOURCE_DB}_mask
 mysql -uroot -hdb -ppassword -e "CREATE DATABASE $MASK_DB"
 mysqldump -u$MASK_USER -h$MASK_HOST -P$MASK_PORT -p$MASK_PASSWORD $SOURCE_DB | mysql -uroot -hdb -ppassword $MASK_DB
 curl $MASK_SETTING_YAML_URL > db_mask_sensitive_data.yml
-#bundle exec ruby mask_sensitive_data
+bundle exec ruby mask_sensitive_data
 mysqldump -uroot -hdb -ppassword $MASK_DB > masked.dump
 echo $GS_UTIL_KEY_FILE > gs.key
 gcloud auth activate-service-account --key-file=gs.key
