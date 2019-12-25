@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -eu
 export MASK_HOST=$(ruby -ruri -e 'puts URI.parse(ENV["DATABASE_URL"]).host')
 export MASK_USER=$(ruby -ruri -e 'puts URI.parse(ENV["DATABASE_URL"]).userinfo' | cut -d ':' -f 1)
 export MASK_PORT=$(ruby -ruri -e 'puts URI.parse(ENV["DATABASE_URL"]).port || 3306')
