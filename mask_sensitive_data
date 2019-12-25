@@ -16,8 +16,18 @@ mask_targets.each do |table_name, columns|
   next unless model.table_exists?
   model.find_each do |record|
     columns.each do |column, value|
-      record[column] = eval(value)
+      begin
+        record[column] = eval(value)
+      rescue StandardError => e
+        STDERR.puts [table_name, column, value].inspect
+        raise e
+      end
     end
-    record.save!
+    begin
+      record.save!
+    rescue StandardError => e
+      STDERR.puts [table_name, record].inspect
+      raise e
+    end
   end
 end
