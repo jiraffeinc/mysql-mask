@@ -5,7 +5,7 @@ MySQL database dump and mask sensitive data according to yaml settings and put i
 ## run
 
 ```
-$ docker-compose run -e "GS_UTIL_KEY_FILE=$(cat YOUR_KEY_FILE)" -e "GCP_ACCOUNT=ACCOUNT" -e "GCP_PROJECT_NAME=PROJECT_NAME" -e "BUCKET_NAME=BUCKET_NAME" -e "OBJECT_NAME=FILE_NAME" -e "DATABASE_URL=mysql://USER:PASSWORD@HOST/DATABASE_NAME" -e "MASK_SETTING_YAML_URL=https://example.com/mask_settings.yml" --rm app
+$ docker-compose run -e "GS_UTIL_KEY_FILE=$(cat YOUR_KEY_FILE)" -e "GCP_ACCOUNT=ACCOUNT" -e "GCP_PROJECT_NAME=PROJECT_NAME" -e "BUCKET_NAME=BUCKET_NAME" -e "OBJECT_NAME=FILE_NAME" -e "DATABASE_URL=mysql://USER:PASSWORD@HOST/DATABASE_NAME" -e "MASK_SETTING_YAML_URL=https://example.com/mask_settings.yml" --rm dump
 ```
 
 

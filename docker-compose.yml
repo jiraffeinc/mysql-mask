@@ -1,12 +1,24 @@
 version: '3.4'
 services:
-  app:
+  dump: &dump
+    image: mysql-mask
+    entrypoint: sh
+    args:
+       - -c
+       - /mask/dump.sh
     build:
       context: .
     tty: true
     stdin_open: true
+    environment:
+      DATABASE_URL: $DATABASE_URL
     volumes:
       - ./:/mask
+  mask:
+    <<: *dump
+    args:
+       - -c
+       - /mask/mask.sh
   db:
     image: mysql:5
     environment:

@@ -11,4 +11,4 @@ RUN apk add --update --no-cache mysql-client mysql-dev build-base curl bash pyth
 ADD . $ROOT_PATH
 WORKDIR $ROOT_PATH
 RUN bundle install
-ENTRYPOINT $ROOT_PATH/docker-entrypoint.sh
+
