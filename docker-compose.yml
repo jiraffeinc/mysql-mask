@@ -2,8 +2,8 @@ version: '3.4'
 services:
   dump: &dump
     image: mysql-mask
-    entrypoint: sh
-    args:
+    entrypoint:
+       - sh
        - -c
        - /mask/dump.sh
     build:
@@ -11,12 +11,22 @@ services:
     tty: true
     stdin_open: true
     environment:
-      DATABASE_URL: $DATABASE_URL
+      PRODUCTION_GS_UTIL_KEY_FILE: &gs-util-key-file |
+        {
+        }
+      PRODUCTION_PROJECT_NAME: 
+      PRODUCTION_DUMP_OBJECT_URL:
+      PRODUCTION_DATABASE_URL:
+      BACKUP_PROJCT_NAME:
+      BACKUP_GS_UTIL_KEY_FILE:
+      BACKUP_DUMP_OBJECT_URL:
+      MASK_SETTING_YAML_URL:
     volumes:
       - ./:/mask
   mask:
     <<: *dump
-    args:
+    entrypoint:
+       - sh
        - -c
        - /mask/mask.sh
   db:
