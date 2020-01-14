@@ -4,10 +4,12 @@ MySQL database dump and mask sensitive data according to yaml settings and put i
 
 ## run
 
-```
-$ docker-compose run -e "GS_UTIL_KEY_FILE=$(cat YOUR_KEY_FILE)" -e "GCP_ACCOUNT=ACCOUNT" -e "GCP_PROJECT_NAME=PROJECT_NAME" -e "BUCKET_NAME=BUCKET_NAME" -e "OBJECT_NAME=FILE_NAME" -e "DATABASE_URL=mysql://USER:PASSWORD@HOST/DATABASE_NAME" -e "MASK_SETTING_YAML_URL=https://example.com/mask_settings.yml" --rm dump
-```
+Write docker-compose.yml for about your GCP project settings.
 
+```
+$ docker-compose run --rm dump
+$ docker-compose run --rm mask
+```
 
 ## Yaml example
 
@@ -20,10 +22,9 @@ inquiries:
 
 ## Need environment variables
 
-- GS_UTIL_KEY_FILE
-- GCP_ACCOUNT
-- GCP_PROJECT_NAME
-- BUCKET_NAME
-- OBJECT_NAME
-- DATABASE_URL
+- PRODUCTION_GS_UTIL_KEY_FILE
+- PRODUCTION_DUMP_OBJECT_URL
+- PRODUCTION_DATABASE_URL
+- BACKUP_GS_UTIL_KEY_FILE
+- BACKUP_DUMP_OBJECT_URL
 - MASK_SETTING_YAML_URL
