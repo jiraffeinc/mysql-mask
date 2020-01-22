@@ -1,0 +1,33 @@
+#!/usr/local/bin/env ruby
+require 'active_record'
+require 'gimei'
+require 'faker'
+
+ActiveRecord::Base.establish_connection(adapter:  "mysql2",
+                                        host:     ENV['MASK_HOST'],
+                                        username: ENV['MASK_USER'],
+                                        password: ENV['MASK_PASSWORD'],
+                                        database: "#{ENV['SOURCE_DB']}_mask")
+mask_targets = YAML.load_file('db_mask_sensitive_data.yml')
+mask_targets.each do |table_name, columns|
+  model = Class.new(ActiveRecord::Base) do
+    self.table_name = table_name
+  end
+  next unless model.table_exists?
+  model.find_each do |record|
+    columns.each do |column, value|
+      begin
+        record[column] = eval(value)
+      rescue StandardError => e
+        STDERR.puts [table_name, column, value].inspect
+        raise e
+      end
+    end
+    begin
+      record.save!
+    rescue StandardError => e
+      STDERR.puts [table_name, record].inspect
+      raise e
+    end
+  end
+end
