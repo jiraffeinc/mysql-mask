@@ -17,6 +17,11 @@ mysql -u$MASK_USER -h$MASK_HOST -p$MASK_PASSWORD -e "CREATE DATABASE $MASK_DB" |
 mysql -u$MASK_USER -h$MASK_HOST -p$MASK_PASSWORD $MASK_DB < mysql.dump
 rm -f mysql.dump
 curl $MASK_SETTING_YAML_URL > db_mask_sensitive_data.yml
+MASK_LINES=$(wc -l db_mask_sensitive_data.yml | awk '{print $1}')
+if [ "$MASK_LINES" -le "1" ];then
+    echo "Nothing mask setting"
+    exit 1
+fi
 bundle exec ruby mask_sensitive_data
 mysqldump -u$MASK_USER -h$MASK_HOST -p$MASK_PASSWORD $MASK_DB > masked.dump
 
