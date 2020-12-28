@@ -13,7 +13,7 @@ gsutil cp $PRODUCTION_DUMP_OBJECT_URL .
 echo $BACKUP_GS_UTIL_KEY_FILE > gs.key
 gcloud auth activate-service-account --key-file=gs.key
 
-mysql -u$MASK_USER -h$MASK_HOST -p$MASK_PASSWORD -e "CREATE DATABASE $MASK_DB" || true
+mysql -u$MASK_USER -h$MASK_HOST -p$MASK_PASSWORD -e "DROP DATABASE; CREATE DATABASE $MASK_DB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;" || true
 mysql -u$MASK_USER -h$MASK_HOST -p$MASK_PASSWORD $MASK_DB < mysql.dump
 rm -f mysql.dump
 curl $MASK_SETTING_YAML_URL > db_mask_sensitive_data.yml
